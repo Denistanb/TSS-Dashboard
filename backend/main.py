@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from datetime import datetime
 from typing import List
 from pydantic import BaseModel
@@ -28,8 +29,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files (frontend)
-app.mount("/static", StaticFiles(directory="../frontend"), name="static")
+# Serve static frontend files (e.g. JS, CSS, images) from /static/*
+app.mount("/static", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "../frontend")), name="static")
+
+# Serve index.html at the root "/"
+@app.get("/")
+def serve_index():
+    index_path = os.path.join(os.path.dirname(__file__), "../frontend/index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    else:
+        return {"error": "index.html not found"}
 
 # Data model
 class SensorData(BaseModel):
@@ -64,55 +74,37 @@ def load_csv_data():
             logger.error(f"CSV file not found at {CSV_FILE_PATH}")
             raise FileNotFoundError(f"CSV file {CSV_FILE_PATH} not found")
 
-        # Required columns based on your CSV structure
         required_columns = [
             'timestamp', 'speed', 'voltage', 'current', 'soc', 'temp', 'pdutemp',
             'power', 'lat', 'long', 'num_of_sats', 'wind_speed',
             'wind_dir_deg', 'wind_level', 'wind_relative_angle'
         ]
 
-        # Load the entire CSV at once for better performance with large datasets
-        logger.info("Reading CSV file...")
         df = pd.read_csv(CSV_FILE_PATH)
         logger.info(f"Initial CSV load: {len(df)} rows")
 
-        # Verify required columns exist
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
             logger.error(f"Missing required columns: {', '.join(missing_columns)}")
             logger.info(f"Available columns: {', '.join(df.columns)}")
             raise ValueError(f"Missing required columns: {', '.join(missing_columns)}")
 
-        # Convert Unix timestamp to IST
-        logger.info("Converting timestamps...")
         df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s', utc=True).dt.tz_convert('Asia/Kolkata')
-
-        # Rename columns to match the expected format
         df = df.rename(columns={'temp': 'temperature', 'wind_dir_deg': 'wind_direction'})
 
-        # Clean and validate data
         logger.info("Cleaning and validating data...")
-        
-        # Remove rows with any NaN values in critical columns
         numeric_columns = [
             'speed', 'voltage', 'current', 'soc', 'temperature',
             'pdutemp', 'power', 'lat', 'long', 'num_of_sats',
             'wind_speed', 'wind_direction', 'wind_level', 'wind_relative_angle'
         ]
-        
-        # Count initial rows
+
         initial_count = len(df)
-        
-        # Drop rows with NaN values
         df = df.dropna(subset=numeric_columns)
-        
         logger.info(f"After removing NaN values: {len(df)} rows (removed {initial_count - len(df)} rows)")
 
-        # Ensure all numeric columns are properly typed
         for col in numeric_columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
-        
-        # Remove any rows that couldn't be converted to numeric
         df = df.dropna(subset=numeric_columns)
         logger.info(f"After numeric conversion: {len(df)} rows")
 
@@ -120,7 +112,6 @@ def load_csv_data():
             logger.error("No valid rows found in CSV after cleaning")
             raise ValueError("No valid data rows found in CSV after cleaning")
 
-        # Convert to list of dictionaries
         logger.info("Converting to list format...")
         valid_data = []
         for _, row in df.iterrows():
@@ -151,24 +142,12 @@ def load_csv_data():
             logger.error("No valid rows found after processing")
             raise ValueError("No valid data rows found after processing")
 
-        # Sort by timestamp (ascending for proper time series)
         valid_data.sort(key=lambda x: datetime.fromisoformat(x['timestamp'].replace('Z', '+00:00')))
         logger.info(f"Returning {len(valid_data)} valid rows, sorted by timestamp")
         return valid_data
     except Exception as e:
         logger.error(f"Error loading CSV data: {str(e)}")
         raise
-
-@app.get("/")
-async def root():
-    return {
-        "message": "Sensor Data Monitoring API",
-        "version": "1.0.0",
-        "endpoints": {
-            "/data": "Get all sensor data from predefined CSV",
-            "/health": "Health check"
-        }
-    }
 
 @app.get("/data", response_model=SensorDataResponse)
 async def get_sensor_data():
@@ -182,7 +161,7 @@ async def get_sensor_data():
         return SensorDataResponse(
             data=data,
             count=len(data),
-            latest_timestamp=data[-1]["timestamp"] if data else ""  # Latest is last in sorted array
+            latest_timestamp=data[-1]["timestamp"] if data else ""
         )
     except Exception as e:
         logger.error(f"Error retrieving sensor data: {str(e)}")
