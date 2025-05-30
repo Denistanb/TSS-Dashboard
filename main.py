@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, Response
 from datetime import datetime
 from typing import List
 from pydantic import BaseModel
@@ -30,6 +31,30 @@ app.add_middleware(
 
 # Serve static files from the root directory
 app.mount("/static", StaticFiles(directory=".", html=True), name="static")
+
+# Serve index.html at the root URL for GET requests
+@app.get("/", response_class=HTMLResponse)
+async def serve_index():
+    try:
+        with open("index.html", "r") as f:
+            logger.info("Serving index.html for GET /")
+            return HTMLResponse(content=f.read())
+    except FileNotFoundError:
+        logger.error("index.html not found in root directory")
+        raise HTTPException(status_code=404, detail="index.html not found")
+
+# Handle HEAD requests for the root URL
+@app.head("/")
+async def serve_index_head():
+    try:
+        if not os.path.exists("index.html"):
+            logger.error("index.html not found in root directory for HEAD request")
+            raise HTTPException(status_code=404, detail="index.html not found")
+        logger.info("Handling HEAD / request")
+        return Response(status_code=200)
+    except FileNotFoundError:
+        logger.error("index.html not found in root directory")
+        raise HTTPException(status_code=404, detail="index.html not found")
 
 # Data model
 class SensorData(BaseModel):
@@ -158,17 +183,6 @@ def load_csv_data():
     except Exception as e:
         logger.error(f"Error loading CSV data: {str(e)}")
         raise
-
-@app.get("/")
-async def root():
-    return {
-        "message": "Sensor Data Monitoring API",
-        "version": "1.0.0",
-        "endpoints": {
-            "/data": "Get all sensor data from predefined CSV",
-            "/health": "Health check"
-        }
-    }
 
 @app.get("/data", response_model=SensorDataResponse)
 async def get_sensor_data():
