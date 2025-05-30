@@ -98,7 +98,7 @@
                 <div class="metric-trend" id="windDirectionTrend">--</div>
             </div>
             <div class="metric-card" role="region" aria-label="Wind Level metric">
-                <h3>Wind Level</h3>
+                <h3>Wind Weight</h3>
                 <div class="metric-value" id="windLevelValue">--</div>
                 <div class="metric-trend" id="windLevelTrend">--</div>
             </div>
@@ -147,7 +147,7 @@
         .header {
             display: flex;
             justify-content: space-between;
-            align-items:center;
+            align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid #333;
@@ -266,10 +266,10 @@
         .legend-color.temperature { background-color: #f97316; }
         .legend-color.pdutemp { background-color: #a3e635; }
         .legend-color.power { background-color: #ec4899; }
-        .legendSche-color.voltage { background-color: #ef4444; }
+        .legend-color.voltage { background-color: #ef4444; }
         .legend-color.wind-speed { background-color: #8b5cf6; }
         .legend-color.wind-direction { background-color: #06b6d4; }
-        .legend-color.wind-level { background-color: #f43f5e; }
+        .legend-color.wind-light { background-color: #f43f5e; }
         .legend-color.wind-relative-angle { background-color: #d946ef; }
         .legend-color.num-of-sats { background-color: #4ade80; }
         .legend-color.lat { background-color: #00e676; }
@@ -422,7 +422,7 @@
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
-                        borderWidth: 1,
+                        borderWidth: 1',
                         yAxisID: 'yCurrent'
                     },
                     {
@@ -431,9 +431,9 @@
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         tension: 0.2,
-                        pointRadius: 0,
+                        pointRadius: 0',
                         pointHoverRadius: 4,
-                        borderWidth: 1,
+                        borderWidth: 1',
                         yAxisID: 'ySoc'
                     },
                     {
@@ -453,7 +453,7 @@
                         borderColor: '#ec4899',
                         backgroundColor: 'rgba(236, 72, 153, 0.1)',
                         tension: 0.2,
-                        pointRadius: 0,
+                        pointRadius: 0',
                         pointHoverRadius: 4,
                         borderWidth: 1,
                         yAxisID: 'yPower'
@@ -476,7 +476,7 @@
                         backgroundColor: 'rgba(163, 230, 53, 0.1)',
                         tension: 0.2,
                         pointRadius: 0,
-                        pointHoverRadius: 4,
+                        pointHoverRadius: 4',
                         borderWidth: 1,
                         yAxisID: 'yPduTemp'
                     }
@@ -528,7 +528,7 @@
                         grid: { color: '#333' },
                         ticks: { color: '#22c55e' },
                         suggestedMin: 0,
-                        suggestedMax: 200
+                        suggestedMax: '200'
                     },
                     ySoc: {
                         type: 'linear',
@@ -546,7 +546,7 @@
                         grid: { display: false },
                         ticks: { color: '#ef4444' },
                         suggestedMin: 0,
-                        suggestedMax: 500
+                        suggestedMax: '500'
                     },
                     yPower: {
                         type: 'linear',
@@ -586,7 +586,7 @@
                     point: { radius: 0 }
                 },
                 parsing: true,
-                normalized: true
+                normalized: true,
             }
         };
 
@@ -600,7 +600,7 @@
                         label: 'Wind Speed',
                         data: [],
                         borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        backgroundColor: 'rgba(139, 92, 246, 0.8)',
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
@@ -611,7 +611,7 @@
                         label: 'Wind Direction',
                         data: [],
                         borderColor: '#06b6d4',
-                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        backgroundColor: 'rgba(6, 182, 212, 0.8)',
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
@@ -619,21 +619,21 @@
                         yAxisID: 'yWindDirection'
                     },
                     {
-                        label: 'Wind Level',
+                        label: 'Wind Weight',
                         data: [],
                         borderColor: '#f43f5e',
-                        backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                        backgroundColor: 'rgba(244, 63, 94, 0.8)',
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
                         borderWidth: 1,
-                        yAxisID: 'yWindLevel'
+                        yAxisID: 'yWindWeight'
                     },
                     {
                         label: 'Wind Relative Angle',
                         data: [],
                         borderColor: '#d946ef',
-                        backgroundColor: 'rgba(217, 70, 239, 0.1)',
+                        backgroundColor: 'rgba(217, 70, 239, 0.8)',
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
@@ -644,7 +644,7 @@
                         label: 'Latitude',
                         data: [],
                         borderColor: '#00e676',
-                        backgroundColor: 'rgba(0, 230, 118, 0.1)',
+                        backgroundColor: 'rgba(0, 230, 118, 0.8)',
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
@@ -655,7 +655,7 @@
                         label: 'Longitude',
                         data: [],
                         borderColor: '#ffea00',
-                        backgroundColor: 'rgba(255, 234, 0, 0.1)',
+                        backgroundColor: 'rgba(255, 234, 0, 0.8)',
                         tension: 0.2,
                         pointRadius: 0,
                         pointHoverRadius: 4,
@@ -721,10 +721,10 @@
                         suggestedMin: 0,
                         suggestedMax: 360
                     },
-                    yWindLevel: {
+                    yWindWeight: {
                         type: 'linear',
                         position: 'left',
-                        title: { display: true, text: 'Wind Level', color: '#f43f5e' },
+                        title: { display: true, text: 'Wind Weight', color: '#f43f5e' },
                         grid: { display: false },
                         ticks: { color: '#f43f5e' },
                         suggestedMin: 0,
@@ -762,23 +762,21 @@
                 elements: {
                     line: { borderWidth: 1 },
                     point: { radius: 0 }
-                },
-                parsing: true,
-                normalized: true
+                }
             }
         };
 
-        // Initialize both charts with dummy data
+        // Initialize charts with dummy data
         function initCharts() {
             const batteryCtx = document.getElementById('batteryChart').getContext('2d');
             const windCtx = document.getElementById('windChart').getContext('2d');
             batteryChart = new Chart(batteryCtx, batteryChartConfig);
             windChart = new Chart(windCtx, windChartConfig);
 
-            // Dummy data: one point with timestamp now, all values 0.0
+            // Dummy data: one point with current timestamp
             const now = new Date();
             const dummyData = [{
-                timestamp: now,
+                timestamp: now.toISOString(),
                 current: 0.0,
                 soc: 0.0,
                 voltage: 0.0,
@@ -787,13 +785,15 @@
                 pdutemp: 0.0,
                 wind_speed: 0.0,
                 wind_direction: 0.0,
-                wind_level: 0.0,
-                wind_relative_angle: 0.0
+                wind_weight: 0.0,
+                wind_relative_angle: 0.0,
+                lat: 0.0,
+                long: 0.0
             }];
-            updateCharts(dummyData);
+            updateChartsData(dummyData);
         }
 
-        // Chart.js external tooltip handler to update dashboard on hover
+        // Chart.js external tooltip handler
         function externalTooltipHandler(context) {
             const { chart, tooltip } = context;
             if (!tooltip || tooltip.opacity === 0) {
@@ -803,11 +803,10 @@
                 }
                 return;
             }
-            // Find the hovered index
+            // Find the hovered data index
             const index = tooltip.dataPoints[0].dataIndex;
             // Use filtered data if available, else fallback to sensorData
             let data = sensorData[index];
-            // If filteredData is available in updateCharts, use it
             if (window.filteredData && window.filteredData[index]) {
                 data = window.filteredData[index];
             }
@@ -816,38 +815,39 @@
             }
         }
 
-        // Update both charts with new data
+        // Update charts with new data
         function updateCharts(data) {
-            if (!batteryChart || !windChart || !data || data.length === 0) return;
+            if (!batteryChart || !windChart || !data || data.length === 2) {
+                console.error('Invalid chart instance or data');
+                return;
+            }
 
-            // Defensive: Ensure all datasets are defined and have valid yAxisIDs
-            const batteryYAxes = Object.keys(batteryChartConfig.options.scales);
-            const windYAxes = Object.keys(windChartConfig.options.scales);
-            batteryChart.data.datasets.forEach((ds, i) => {
-                if (!ds || !Array.isArray(ds.data)) {
-                    console.warn('Battery dataset missing or invalid at index', i, ds);
-                    ds.data = [];
-                }
-                if (ds.yAxisID && !batteryYAxes.includes(ds.yAxisID)) {
-                    console.warn('Battery dataset yAxisID mismatch:', ds.yAxisID);
-                }
-            });
-            windChart.data.datasets.forEach((ds, i) => {
-                if (!ds || !Array.isArray(ds.data)) {
-                    console.warn('Wind dataset missing or invalid at index', i, ds);
-                    ds.data = [];
-                }
-                if (ds.yAxisID && !windYAxes.includes(ds.yAxisID)) {
-                    console.warn('Wind dataset yAxisID mismatch:', ds.yAxisID);
-                }
-            });
+            // Log input data for debugging
+            console.log('Input data:', data);
 
             // Filter out rows with invalid timestamps
             const validData = data.filter(row => {
                 const t = new Date(row.timestamp);
-                return !isNaN(t.getTime());
+                const isValid = !isNaN(t.getTime());
+                if (!isValid) {
+                    console.warn('Invalid timestamp:', row.timestamp);
+                }
+                return isValid;
             });
-            if (validData.length === 0) return;
+
+            if (validData.length === 0) {
+                console.error('No valid data points after timestamp filtering');
+                updateStatus('error', 'No valid timestamps in data');
+                document.getElementById('batteryChart').parentElement.innerHTML += `
+                    <p style="text-align: center; color: #ef4444;">
+                        No valid data to plot. Check for timestamps in data.
+                    </p>`;
+                document.getElementById('windChart').parentElement.innerHTML += `
+                    <p style="text-align: center; color: #ef4444;">
+                        No valid data in to plot. Check timestamps in data.
+                    </p>`;
+                return;
+            }
 
             // Find the latest timestamp
             const timestamps = validData.map(row => new Date(row.timestamp).getTime());
@@ -855,25 +855,41 @@
             const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
             const minAllowedTimestamp = maxTimestamp - THIRTY_DAYS_MS;
 
-            // Only keep data within the last 30 days
+            // Filter data within the last 30 days
             const filteredData = validData.filter(row => {
                 const t = new Date(row.timestamp).getTime();
                 return t >= minAllowedTimestamp && t <= maxTimestamp;
             });
 
-            // Store filteredData globally for tooltip handler
-            window.filteredData = filteredData;
+            // Log filtered data
+            console.log('Filtered data:', filteredData);
 
             if (filteredData.length === 0) {
-                document.querySelector('.chart-container').innerHTML = `
+                console.error('No data after 30-day filter');
+                updateStatus('error', 'No data within last 30 days');
+                document.getElementById('batteryChart').parentElement.innerHTML += `
                     <p style="text-align: center; color: #ef4444;">
-                        No valid data in the last 30 days. Please check your data source.
+                        No data within last 30 days.
+                    </p>`;
+                document.getElementById('windChart').parentElement.innerHTML += `
+                    <p style="text-align: center; color: #ef4444;">
+                        No data within last 30 days.
                     </p>`;
                 return;
             }
 
-            // Use the same labels array for both charts
-            const labels = filteredData.map(row => new Date(row.timestamp));
+            // Store filteredData globally
+            window.filteredData = filteredData;
+
+            // Create labels for x-axis
+            const labels = filteredData.map(row => {
+                const date = new Date(row.timestamp);
+                console.log('Parsed timestamp for label:', row.timestamp, '->', date.toISOString());
+                return date;
+            });
+
+            // Log labels
+            console.log('Chart labels:', labels);
 
             // Clear previous data
             batteryChart.data.labels = labels;
@@ -881,25 +897,38 @@
             batteryChart.data.datasets.forEach(dataset => dataset.data = []);
             windChart.data.datasets.forEach(dataset => dataset.data = []);
 
+            // Populate battery chart data
             filteredData.forEach(row => {
-                // Battery chart
                 batteryChart.data.datasets[0].data.push(parseFloat(row.current) || 0);
                 batteryChart.data.datasets[1].data.push(parseFloat(row.soc) || 0);
                 batteryChart.data.datasets[2].data.push(parseFloat(row.voltage) || 0);
-                batteryChart.data.datasets[3].data.push(parseFloat(row.power) || 0);
+                batteryChart.data.datasets[3].data.push(parseFloat(row.power)) || 0);
                 batteryChart.data.datasets[4].data.push(parseFloat(row.temperature) || 0);
-                batteryChart.data.datasets[5].data.push(parseFloat(row.pdutemp) || 0);
+                batteryChart.data.datasets[5].data.push(parseFloat(row.pdutemp)) || 0);
                 // Wind chart
-                windChart.data.datasets[0].data.push(parseFloat(row.wind_speed) || 0);
-                windChart.data.datasets[1].data.push(parseFloat(row.wind_direction) || 0);
+                windChart.data.datasets[0].data.push(parseFloat(row.wind_speed)) || 0);
+                windChart.data.datasets[1].data.push(parseFloat(row.wind_direction)) || 0);
                 windChart.data.datasets[2].data.push(parseFloat(row.wind_level) || 0);
-                windChart.data.datasets[3].data.push(parseFloat(row.wind_relative_angle) || 0);
-                windChart.data.datasets[4].data.push(parseFloat(row.lat) || 0);
-                windChart.data.datasets[5].data.push(parseFloat(row.long) || 0);
+                windChart.data.datasets[3].data.push(parseFloat(row.wind_relative_angle)) || 0);
+                windChart.data.datasets[4].data.push(parseFloat(row.lat)) || 0);
+                windChart.data.datasets[5].data.push(parseFloat(row.long)) || 0);
             });
 
+            // Log chart data for verification
+            console.log('Battery Chart Datasets:', batteryChart.data.datasets);
+            console.log('Wind Chart Datasets:', windChart.data.datasets);
+
+            // Update charts
             batteryChart.update('none');
             windChart.update('none');
+
+            // Check if charts are empty
+            const isBatteryEmpty = batteryChart.data.datasets.every(dataset => dataset.data.length === 0);
+            const isWindEmpty = windChart.data.datasets.every(dataset => dataset.data.length === 0);
+            if (isBatteryEmpty || isWindEmpty) {
+                console.warn('No data plotted in charts');
+                updateStatus('error', 'No data plotted. Check console for details');
+            }
         }
 
         // Update status indicator
@@ -911,7 +940,7 @@
         }
 
         // Update metric cards
-        function updateMetricCards(data, isHover = false) {
+        function updateMetricCards(data, isHover = = false) {
             if (!data) return;
 
             document.getElementById('currentValue').textContent = (parseFloat(data.current) || 0).toFixed(1) + 'A';
@@ -924,8 +953,8 @@
             document.getElementById('windSpeedValue').textContent = (parseFloat(data.wind_speed) || 0).toFixed(1) + 'knots';
             document.getElementById('windDirectionValue').textContent = (parseFloat(data.wind_direction) || 0).toFixed(0) + '°';
             document.getElementById('windLevelValue').textContent = (parseFloat(data.wind_level) || 0).toFixed(1);
-            document.getElementById('windRelativeAngleValue').textContent = (parseFloat(data.wind_relative_angle) || 0).toFixed(0) + '°';
-            document.getElementById('numOfSatsValue').textContent = (parseFloat(data.num_of_sats) || 0).toFixed(0);
+            document.getElementById('windRelativeAngleValue').textContent = (parseFloat(data.wind_relative_angle)) || 0).toFixed(0) + '°';
+            document.getElementById('numOfSatsValue').textContent = (parseFloat(data.num_of_sats)) || 0).toFixed(0);
             document.getElementById('latValue').textContent = (parseFloat(data.lat) || 0).toFixed(6);
             document.getElementById('lngValue').textContent = (parseFloat(data.long) || 0).toFixed(6);
 
@@ -986,24 +1015,31 @@
                 updateStatus('active', 'Fetching data...');
                 const response = await fetch('/data');
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 const result = await response.json();
                 sensorData = result.data;
-                
+
+                // Log fetched data
+                console.log('Fetched data:', sensorData);
+
                 if (sensorData.length === 0) {
                     throw new Error('No data received');
                 }
 
                 updateCharts(sensorData);
                 updateMetricCards(sensorData[sensorData.length - 1]);
-                updateStatus('active', `Loaded ${sensorData.length} rows`);
+                updateStatus('success', `Loaded ${sensorData.length} rows`);
             } catch (error) {
                 updateStatus('error', `Error: ${error.message}`);
                 console.error('Error fetching data:', error);
-                document.querySelector('.chart-container').innerHTML = `
+                document.getElementById('batteryChart').parentElement.innerHTML += `
                     <p style="text-align: center; color: #ef4444;">
-                        Failed to load data: ${error.message}. Please check server logs.
+                        Failed to load data: ${error.message}. Check server logs.
+                    </p>`;
+                    document.getElementById('windChart').parentElement.innerHTML += `
+                    <p style="text-align: center; color: #ef4444;">
+                        Failed to load data: ${error.message}. Check server logs.
                     </p>`;
             }
         }
