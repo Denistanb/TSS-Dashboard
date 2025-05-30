@@ -22,14 +22,14 @@ app = FastAPI(
 # CORS config
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # Update to specific origins in production (e.g., https://your-app.onrender.com)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Serve static files (frontend)
-app.mount("/static", StaticFiles(directory="../frontend"), name="static")
+# Serve static files from the root directory
+app.mount("/static", StaticFiles(directory=".", html=True), name="static")
 
 # Data model
 class SensorData(BaseModel):
@@ -54,7 +54,7 @@ class SensorDataResponse(BaseModel):
     count: int
     latest_timestamp: str
 
-# CSV file path
+# CSV file path (in root directory)
 CSV_FILE_PATH = "final_clean_data.csv"
 
 def load_csv_data():
@@ -199,4 +199,6 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
+    # Use environment variable for port to support Render; default to 8000 for local testing
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
