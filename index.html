@@ -147,7 +147,7 @@
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items:center;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid #333;
@@ -266,7 +266,7 @@
         .legend-color.temperature { background-color: #f97316; }
         .legend-color.pdutemp { background-color: #a3e635; }
         .legend-color.power { background-color: #ec4899; }
-        .legend-color.voltage { background-color: #ef4444; }
+        .legendSche-color.voltage { background-color: #ef4444; }
         .legend-color.wind-speed { background-color: #8b5cf6; }
         .legend-color.wind-direction { background-color: #06b6d4; }
         .legend-color.wind-level { background-color: #f43f5e; }
@@ -984,7 +984,7 @@
         async function fetchData() {
             try {
                 updateStatus('active', 'Fetching data...');
-                const response = await fetch('http://127.0.0.1:8000/data');
+                const response = await fetch('/data');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
